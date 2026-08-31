@@ -2,30 +2,60 @@ package com.gustavoadono.vocabulary.service;
 
 import com.gustavoadono.vocabulary.model.Word;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class VocabularyService {
-    Set<Word> wordSet = new HashSet<>();
-    Long idCounter;
+    List<Word> wordList = new ArrayList<>();
 
-    public void insertWord(String japanese,String romaji, String meaning){
 
-        if(japanese!= null && romaji!= null && meaning != null){
-            wordSet.add(new Word(japanese,romaji,meaning));
+    public boolean insertWord(String japanese, String romaji, String meaning) {
+
+        if (japanese == null || japanese.isBlank()
+                || romaji == null || romaji.isBlank()
+                || meaning == null || meaning.isBlank()) {
+
+            System.out.println("The word must have a Japanese word, romaji, and meaning.");
+            return false ;
         }
 
+        Word newWord = new Word(japanese, romaji, meaning);
+
+        if(wordList.contains(newWord)){
+            System.out.println("This word already exists!");
+            return false;
+        }
+
+        wordList.add(newWord);
+        System.out.println("Word added successfully.");
+        return  true;
     }
-    public void removeWord(Word newWord){
-        wordSet.remove(newWord);
+
+    public boolean removeWord(String japanese) {
+
+        if(japanese== null || japanese.isBlank()){
+            return false;
+        }
+
+        Iterator<Word> wordIterator = wordList.iterator();
+
+        while (wordIterator.hasNext()) {
+            if (wordIterator.next().getJapanese().equals(japanese)) {
+                wordIterator.remove();
+                return true;
+            }
+        }
+        return false;
     }
-    public void listAllWords(){
-        for (Word word : wordSet){
-            System.out.println(word.getJapanese()+" - "+word.getRomaji()+" - "+word.getMeaning());
+
+    public void listAllWords() {
+        for (Word word : wordList) {
+            System.out.println(word.getJapanese() + " - " + word.getRomaji() + " - " + word.getMeaning());
         }
     }
 
-    public void searchWord(){
+    public void searchWord() {
 
     }
 

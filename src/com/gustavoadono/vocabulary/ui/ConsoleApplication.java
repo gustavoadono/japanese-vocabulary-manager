@@ -8,7 +8,9 @@ public class ConsoleApplication {
 
     Scanner scanner;
     int choice = 0 ;
-    String answer;
+    String japanese;
+    String romaji;
+    String meaning;
     VocabularyService vocabulary = new VocabularyService();
 
     public ConsoleApplication(Scanner scanner) {
@@ -26,20 +28,37 @@ public class ConsoleApplication {
             listOptions();
 
             choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    vocabulary.insertWord("ねこ","neko","cat");
-                    vocabulary.insertWord("いぬ","inu","dog");
-                    vocabulary.insertWord("水","mizu","water");
+
+                    System.out.println("ADD WORD");
+                    System.out.println("Japanese: ");
+                    japanese = scanner.nextLine();
+                    System.out.println("Romaji: ");
+                    romaji = scanner.nextLine();
+                    System.out.println("Meaning: ");
+                    meaning = scanner.nextLine();
+                    vocabulary.insertWord(japanese,romaji,meaning);
                     break;
                 case 2:
                     vocabulary.listAllWords();
                     break;
                 case 3:
-                    vocabulary.listAllWords();
+                 
                     break;
                 case 4:
+                    vocabulary.listAllWords();
+                    System.out.println("REMOVE WORD");
+                    System.out.println("Japanese: ");
+                    japanese = scanner.nextLine();
+                    if(vocabulary.removeWord(japanese)){
+                        System.out.println("word "+japanese+" removed");
+                    }
+                    else{
+                        System.out.println("word not found");
+                    }
                     break;
                 case 0:
                     choice = -1;
@@ -64,6 +83,6 @@ public class ConsoleApplication {
         System.out.println("3. Search word");
         System.out.println("4. Remove word");
         System.out.println("0. Exit");
-        System.out.println("Choose an option:");
+        System.out.println("Choose an option: ");
     }
 }

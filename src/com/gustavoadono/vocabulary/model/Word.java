@@ -2,7 +2,7 @@ package com.gustavoadono.vocabulary.model;
 
 import java.util.Objects;
 
-public class Word implements Comparable<Word>{
+public class Word {
 
     String japanese;
     String romaji;
@@ -30,16 +30,13 @@ public class Word implements Comparable<Word>{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Word word = (Word) o;
-        return Objects.equals(japanese, word.japanese) && Objects.equals(romaji, word.romaji);
+        return Objects.equals(japanese, word.japanese);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(japanese, romaji);
+        return Objects.hashCode(japanese);
     }
 
-    @Override
-    public int compareTo(Word o) {
-        return 0;
-    }
+
 }

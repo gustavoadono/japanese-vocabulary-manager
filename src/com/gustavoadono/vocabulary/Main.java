@@ -9,6 +9,6 @@ public class Main {
         ConsoleApplication vocab = new ConsoleApplication(new Scanner(System.in));
         while(vocab.runApplication()){
 
-        };g
+        };
     }
 }
