@@ -38,5 +38,12 @@ public class Word {
         return Objects.hashCode(japanese);
     }
 
-
+    @Override
+    public String toString() {
+        return "Word{" +
+                "japanese='" + japanese + '\'' +
+                ", romaji='" + romaji + '\'' +
+                ", meaning='" + meaning + '\'' +
+                '}';
+    }
 }

@@ -10,31 +10,32 @@ public class VocabularyService {
     List<Word> wordList = new ArrayList<>();
 
 
-    public boolean insertWord(String japanese, String romaji, String meaning) {
+    public void insertWord(String japanese, String romaji, String meaning) {
 
         if (japanese == null || japanese.isBlank()
                 || romaji == null || romaji.isBlank()
                 || meaning == null || meaning.isBlank()) {
 
             System.out.println("The word must have a Japanese word, romaji, and meaning.");
-            return false ;
+
         }
 
         Word newWord = new Word(japanese, romaji, meaning);
 
-        if(wordList.contains(newWord)){
+        if (wordList.contains(newWord)) {
             System.out.println("This word already exists!");
-            return false;
+
+        } else {
+            wordList.add(newWord);
+            System.out.println("Word added successfully.");
         }
 
-        wordList.add(newWord);
-        System.out.println("Word added successfully.");
-        return  true;
+
     }
 
     public boolean removeWord(String japanese) {
 
-        if(japanese== null || japanese.isBlank()){
+        if (japanese == null || japanese.isBlank()) {
             return false;
         }
 
@@ -55,8 +56,23 @@ public class VocabularyService {
         }
     }
 
-    public void searchWord() {
+    public List<Word> searchWord(String wordToSearch) {
 
+        List<Word> wordsFound = new ArrayList<>();
+
+        if (wordToSearch == null || wordToSearch.isBlank()) {
+            return wordsFound;
+        }
+
+        for (Word word : wordList) {
+            if (word.getJapanese().equals(wordToSearch)
+                    || word.getRomaji().equals(wordToSearch)
+                    || word.getMeaning().equals(wordToSearch)) {
+                wordsFound.add(word);
+            }
+        }
+
+        return wordsFound;
     }
 
 }
