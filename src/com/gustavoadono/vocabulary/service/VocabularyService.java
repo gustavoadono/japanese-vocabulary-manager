@@ -6,31 +6,34 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+
 public class VocabularyService {
-    List<Word> wordList = new ArrayList<>();
 
+    private final List<Word> wordList = new ArrayList<>();
 
-    public void insertWord(String japanese, String romaji, String meaning) {
+    public enum InsertWordResult {
+        ADDED,
+        DUPLICATE,
+        INVALID
+    }
+
+    public InsertWordResult insertWord(String japanese, String romaji, String meaning) {
 
         if (japanese == null || japanese.isBlank()
                 || romaji == null || romaji.isBlank()
                 || meaning == null || meaning.isBlank()) {
-
-            System.out.println("The word must have a Japanese word, romaji, and meaning.");
-
+            return InsertWordResult.INVALID;
         }
 
         Word newWord = new Word(japanese, romaji, meaning);
 
         if (wordList.contains(newWord)) {
-            System.out.println("This word already exists!");
-
-        } else {
-            wordList.add(newWord);
-            System.out.println("Word added successfully.");
+            return InsertWordResult.DUPLICATE;
         }
 
-
+        wordList.add(newWord);
+        return InsertWordResult.ADDED;
     }
 
     public boolean removeWord(String japanese) {
@@ -47,13 +50,12 @@ public class VocabularyService {
                 return true;
             }
         }
+
         return false;
     }
 
-    public void listAllWords() {
-        for (Word word : wordList) {
-            System.out.println(word.getJapanese() + " - " + word.getRomaji() + " - " + word.getMeaning());
-        }
+    public List<Word> listAllWords() {
+        return new ArrayList<>(wordList);
     }
 
     public List<Word> searchWord(String wordToSearch) {
@@ -74,5 +76,4 @@ public class VocabularyService {
 
         return wordsFound;
     }
-
 }
